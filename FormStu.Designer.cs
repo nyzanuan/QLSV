@@ -44,10 +44,10 @@ namespace QLSV
             this.btn_del = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.txt_search = new System.Windows.Forms.TextBox();
+            this.btn_search = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.show_stu = new System.Windows.Forms.DataGridView();
-            this.btn_search = new System.Windows.Forms.Button();
-            this.txt_search = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.show_stu)).BeginInit();
@@ -193,6 +193,26 @@ namespace QLSV
             this.panel2.Size = new System.Drawing.Size(379, 99);
             this.panel2.TabIndex = 20;
             // 
+            // txt_search
+            // 
+            this.txt_search.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_search.Location = new System.Drawing.Point(96, 14);
+            this.txt_search.Name = "txt_search";
+            this.txt_search.Size = new System.Drawing.Size(212, 29);
+            this.txt_search.TabIndex = 21;
+            // 
+            // btn_search
+            // 
+            this.btn_search.BackColor = System.Drawing.Color.AntiqueWhite;
+            this.btn_search.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_search.Location = new System.Drawing.Point(314, 14);
+            this.btn_search.Name = "btn_search";
+            this.btn_search.Size = new System.Drawing.Size(57, 33);
+            this.btn_search.TabIndex = 20;
+            this.btn_search.Text = "Tìm";
+            this.btn_search.UseVisualStyleBackColor = false;
+            this.btn_search.Click += new System.EventHandler(this.btn_search_Click);
+            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -222,25 +242,6 @@ namespace QLSV
             this.show_stu.Size = new System.Drawing.Size(713, 542);
             this.show_stu.TabIndex = 18;
             this.show_stu.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.show_stu_CellContentClick);
-            // 
-            // btn_search
-            // 
-            this.btn_search.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_search.Location = new System.Drawing.Point(314, 14);
-            this.btn_search.Name = "btn_search";
-            this.btn_search.Size = new System.Drawing.Size(57, 33);
-            this.btn_search.TabIndex = 20;
-            this.btn_search.Text = "Tìm";
-            this.btn_search.UseVisualStyleBackColor = true;
-            this.btn_search.Click += new System.EventHandler(this.btn_search_Click);
-            // 
-            // txt_search
-            // 
-            this.txt_search.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_search.Location = new System.Drawing.Point(96, 14);
-            this.txt_search.Name = "txt_search";
-            this.txt_search.Size = new System.Drawing.Size(212, 29);
-            this.txt_search.TabIndex = 21;
             // 
             // FormStu
             // 

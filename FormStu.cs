@@ -41,12 +41,12 @@ namespace QLSV
         private void btn_add_Click(object sender, EventArgs e)
         {
 
-            connect.Open();
-            SqlCommand com = new SqlCommand(@"INSERT INTO SINHVIEN (MASV,MALP,TENSV,DCSV) VALUES (@id,@class_id,@name,@address)", connect);
+            connect.Open();          
             SqlCommand cmdCheck = new SqlCommand(@"SELECT Count(*) FROM SINHVIEN WHERE MASV = @id", connect);
             cmdCheck.Parameters.AddWithValue("@id", txt_id.Text);
-            int result = (int)cmdCheck.ExecuteScalar();
-            if (result > 0)
+            SqlDataReader dr = cmdCheck.ExecuteReader();
+
+            if (dr.Read())
             {
                 MessageBox.Show("Mã sinh viên đã tồn tại");
                 connect.Close();
@@ -60,6 +60,7 @@ namespace QLSV
                 }
                 else
                 {
+                    SqlCommand com = new SqlCommand(@"INSERT INTO SINHVIEN (MASV,MALP,TENSV,DCSV) VALUES (@id,@class_id,@name,@address)", connect);
                     com.Parameters.AddWithValue("@id", txt_id.Text);
                     com.Parameters.AddWithValue("@class_id", txt_class_id.Text);
                     com.Parameters.AddWithValue("@name", txt_name.Text);
@@ -135,7 +136,7 @@ namespace QLSV
             com.Parameters.AddWithValue("@name", txt_search.Text);
             com.Parameters.AddWithValue("@address", txt_search.Text);*/
 
-            com.ExecuteNonQuery();
+            //com.ExecuteNonQuery();
 
            /* adpt.SelectCommand = cmd;
             table.Clear();

@@ -31,8 +31,38 @@ namespace QLSV
 
         private void btn_login_Click(object sender, EventArgs e)
         {
-            FormMain formMain = new FormMain();
-            formMain.ShowDialog();
+            connect.Open();
+            SqlCommand cmdCheck = new SqlCommand(@"SELECT * FROM TAIKHOAN WHERE TENDN = @account AND MATKHAU = @password ", connect);
+            cmdCheck.Parameters.AddWithValue("@account", txt_acc.Text);
+            cmdCheck.Parameters.AddWithValue("@password", txt_pass.Text);
+            SqlDataReader dr = cmdCheck.ExecuteReader();
+            // int result = (int)cmdCheck.ExecuteScalar();
+            if (string.IsNullOrEmpty(txt_acc.Text) == true || string.IsNullOrEmpty(txt_pass.Text) == true)
+            {
+                MessageBox.Show("Phải điền đầy đủ thông tin");
+                connect.Close();
+            }
+            else
+            {
+                if(dr.Read() != true)
+                {
+                    MessageBox.Show("Tài khoản hoặc mật khẩu không chính xác");
+                    
+                    connect.Close();
+                }
+                else
+                {
+                    FormMain formMain = new FormMain();
+                    formMain.ShowDialog();
+                }
+                
+    
+            }
+            
+            connect.Close();
+
         }
+
+        
     }
 }
