@@ -43,6 +43,7 @@ namespace QLSV
             this.btn_update = new System.Windows.Forms.Button();
             this.btn_del = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btn_reset = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.txt_search = new System.Windows.Forms.TextBox();
             this.btn_search = new System.Windows.Forms.Button();
@@ -122,7 +123,7 @@ namespace QLSV
             // 
             this.btn_insert.BackColor = System.Drawing.Color.AntiqueWhite;
             this.btn_insert.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_insert.Location = new System.Drawing.Point(23, 372);
+            this.btn_insert.Location = new System.Drawing.Point(46, 372);
             this.btn_insert.Name = "btn_insert";
             this.btn_insert.Size = new System.Drawing.Size(92, 43);
             this.btn_insert.TabIndex = 10;
@@ -142,7 +143,7 @@ namespace QLSV
             // 
             this.btn_update.BackColor = System.Drawing.Color.AntiqueWhite;
             this.btn_update.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_update.Location = new System.Drawing.Point(254, 372);
+            this.btn_update.Location = new System.Drawing.Point(46, 437);
             this.btn_update.Name = "btn_update";
             this.btn_update.Size = new System.Drawing.Size(92, 43);
             this.btn_update.TabIndex = 13;
@@ -154,7 +155,7 @@ namespace QLSV
             // 
             this.btn_del.BackColor = System.Drawing.Color.AntiqueWhite;
             this.btn_del.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_del.Location = new System.Drawing.Point(134, 372);
+            this.btn_del.Location = new System.Drawing.Point(225, 372);
             this.btn_del.Name = "btn_del";
             this.btn_del.Size = new System.Drawing.Size(92, 43);
             this.btn_del.TabIndex = 15;
@@ -165,6 +166,7 @@ namespace QLSV
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.btn_reset);
             this.panel1.Controls.Add(this.panel2);
             this.panel1.Controls.Add(this.btn_del);
             this.panel1.Controls.Add(this.btn_update);
@@ -181,6 +183,18 @@ namespace QLSV
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(380, 543);
             this.panel1.TabIndex = 17;
+            // 
+            // btn_reset
+            // 
+            this.btn_reset.BackColor = System.Drawing.Color.AntiqueWhite;
+            this.btn_reset.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_reset.Location = new System.Drawing.Point(225, 437);
+            this.btn_reset.Name = "btn_reset";
+            this.btn_reset.Size = new System.Drawing.Size(92, 43);
+            this.btn_reset.TabIndex = 21;
+            this.btn_reset.Text = "Đặt lại";
+            this.btn_reset.UseVisualStyleBackColor = false;
+            this.btn_reset.Click += new System.EventHandler(this.btn_reset_Click);
             // 
             // panel2
             // 
@@ -285,5 +299,6 @@ namespace QLSV
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button btn_search;
         private System.Windows.Forms.TextBox txt_search;
+        private System.Windows.Forms.Button btn_reset;
     }
 }

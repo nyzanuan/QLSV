@@ -35,8 +35,20 @@ namespace QLSV
             InitializeComponent();
 
         }
-
-
+        private void FormStu_Load(object sender, EventArgs e)
+        {
+            loadData();
+        }
+        private void show_stu_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            txt_id.ReadOnly = true;
+            int i;
+            i = show_stu.CurrentRow.Index;
+            txt_id.Text = show_stu.Rows[i].Cells[0].Value.ToString();
+            txt_class_id.Text = show_stu.Rows[i].Cells[1].Value.ToString();
+            txt_name.Text = show_stu.Rows[i].Cells[2].Value.ToString();
+            txt_address.Text = show_stu.Rows[i].Cells[3].Value.ToString();
+        }
 
         private void btn_add_Click(object sender, EventArgs e)
         {
@@ -44,9 +56,10 @@ namespace QLSV
             connect.Open();          
             SqlCommand cmdCheck = new SqlCommand(@"SELECT Count(*) FROM SINHVIEN WHERE MASV = @id", connect);
             cmdCheck.Parameters.AddWithValue("@id", txt_id.Text);
-            SqlDataReader dr = cmdCheck.ExecuteReader();
-
-            if (dr.Read())
+            //SqlDataReader dr = cmdCheck.ExecuteReader();
+            int result = (int)cmdCheck.ExecuteScalar();
+            
+            if (result > 0)
             {
                 MessageBox.Show("Mã sinh viên đã tồn tại");
                 connect.Close();
@@ -76,22 +89,7 @@ namespace QLSV
 
         }
 
-       
-        private void FormStu_Load(object sender, EventArgs e)
-        {
-            loadData();
-        }
 
-        private void show_stu_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            txt_id.ReadOnly = true;
-            int i;
-            i = show_stu.CurrentRow.Index;
-            txt_id.Text = show_stu.Rows[i].Cells[0].Value.ToString();
-            txt_class_id.Text = show_stu.Rows[i].Cells[1].Value.ToString();
-            txt_name.Text = show_stu.Rows[i].Cells[2].Value.ToString();
-            txt_address.Text = show_stu.Rows[i].Cells[3].Value.ToString();
-        }
 
         private void btn_del_Click(object sender, EventArgs e)
         {
@@ -152,10 +150,14 @@ namespace QLSV
 
         }
 
-
-
-
-
+        private void btn_reset_Click(object sender, EventArgs e)
+        {
+            txt_id.ReadOnly = false;
+            txt_id.Text = "";
+            txt_class_id.Text = "";
+            txt_name.Text = "";
+            txt_address.Text = "";
+        }
     }
 }
 
