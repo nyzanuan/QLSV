@@ -86,6 +86,12 @@ namespace QLSV
                 connect.Close();
             }
             loadData();
+            //xóa các textbox
+            txt_id.ReadOnly = false;
+            txt_id.ResetText();
+            txt_class_id.ResetText();
+            txt_name.ResetText();
+            txt_address.ResetText();
 
         }
 
@@ -94,32 +100,56 @@ namespace QLSV
         private void btn_del_Click(object sender, EventArgs e)
         {
             connect.Open();
-            SqlCommand com = new SqlCommand(@"DELETE FROM SINHVIEN WHERE MASV = @id ", connect);
-            com.Parameters.AddWithValue("@id", txt_id.Text);        
-            com.ExecuteNonQuery();
-            MessageBox.Show("Xóa thành công");
+            if (string.IsNullOrEmpty(txt_id.Text) == true || string.IsNullOrEmpty(txt_class_id.Text) == true || string.IsNullOrEmpty(txt_name.Text) == true || string.IsNullOrEmpty(txt_address.Text) == true)
+            {
+                MessageBox.Show("Phải chọn sinh viên cần xóa");
+            }
+            else
+            {
+                SqlCommand com = new SqlCommand(@"DELETE FROM SINHVIEN WHERE MASV = @id ", connect);
+                com.Parameters.AddWithValue("@id", txt_id.Text);
+                com.ExecuteNonQuery();
+                MessageBox.Show("Xóa thành công");
+                connect.Close();
+            }
+            
             loadData();
-            txt_id.Text = "";
-            txt_class_id.Text = "";
-            txt_name.Text = "";
-            txt_address.Text = "";
-            connect.Close();
+            //xóa các textbox
+            txt_id.ReadOnly = false;
+            txt_id.ResetText();
+            txt_class_id.ResetText();
+            txt_name.ResetText();
+            txt_address.ResetText();
         }
 
         private void btn_update_Click(object sender, EventArgs e)
         {
-            connect.Open(); 
-            SqlCommand com = new SqlCommand(@"UPDATE SINHVIEN SET MALP = @class_id, TENSV = @name, DCSV= @address WHERE MASV =@id ", connect);
-            com.Parameters.AddWithValue("@id", txt_id.Text);
-            com.Parameters.AddWithValue("@class_id", txt_class_id.Text);
-            com.Parameters.AddWithValue("@name", txt_name.Text);
-            com.Parameters.AddWithValue("@address", txt_address.Text);
-
-            com.ExecuteNonQuery();
-            MessageBox.Show("Cập nhật thành công");
+            connect.Open();
+            if (string.IsNullOrEmpty(txt_id.Text) == true || string.IsNullOrEmpty(txt_class_id.Text) == true || string.IsNullOrEmpty(txt_name.Text) == true || string.IsNullOrEmpty(txt_address.Text) == true)
+            {
+                MessageBox.Show("Phải chọn sinh viên cần cập nhật");
+                connect.Close();
+            }
+            else
+            {
+                SqlCommand com = new SqlCommand(@"UPDATE SINHVIEN SET MALP = @class_id, TENSV = @name, DCSV= @address WHERE MASV =@id ", connect);
+                com.Parameters.AddWithValue("@id", txt_id.Text);
+                com.Parameters.AddWithValue("@class_id", txt_class_id.Text);
+                com.Parameters.AddWithValue("@name", txt_name.Text);
+                com.Parameters.AddWithValue("@address", txt_address.Text);
+                com.ExecuteNonQuery();
+                MessageBox.Show("Cập nhật thành công");
+                connect.Close();
+            }
+            
             loadData();
 
-            connect.Close();
+            //xóa các textbox
+            txt_id.ReadOnly = false;
+            txt_id.ResetText();
+            txt_class_id.ResetText();
+            txt_name.ResetText();
+            txt_address.ResetText();
         }
        
         private void btn_search_Click(object sender, EventArgs e)
@@ -153,10 +183,10 @@ namespace QLSV
         private void btn_reset_Click(object sender, EventArgs e)
         {
             txt_id.ReadOnly = false;
-            txt_id.Text = "";
-            txt_class_id.Text = "";
-            txt_name.Text = "";
-            txt_address.Text = "";
+            txt_id.ResetText();
+            txt_class_id.ResetText();
+            txt_name.ResetText();
+            txt_address.ResetText();
         }
     }
 }

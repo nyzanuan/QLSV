@@ -65,5 +65,10 @@ namespace QLSV
         {
 
         }
+
+        private void btn_logout_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

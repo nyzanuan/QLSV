@@ -68,6 +68,7 @@ namespace QLSV
                 if (string.IsNullOrEmpty(txt_id.Text) == true || string.IsNullOrEmpty(txt_name.Text) == true || string.IsNullOrEmpty(txt_tc.Text) == true)
                 {
                     MessageBox.Show("Phải điền đầy đủ thông tin");
+                    connect.Close();
                 }
                 else
                 { 
@@ -80,30 +81,45 @@ namespace QLSV
                     connect.Close();
                 }
             }
-            
             loadData();
+            //xóa các textbox
+            txt_id.ResetText();
+            txt_name.ResetText();
+            txt_tc.ResetText();
+           
         }
 
         private void btn_del_Click(object sender, EventArgs e)
         {
             connect.Open();
-            SqlCommand com = new SqlCommand(@"DELETE FROM MONHOC WHERE MAMH=@id ", connect);
-            com.Parameters.AddWithValue("@id", txt_id.Text);
-            com.ExecuteNonQuery();
-            MessageBox.Show("Xóa thành công");
+            if (string.IsNullOrEmpty(txt_id.Text) == true || string.IsNullOrEmpty(txt_name.Text) == true || string.IsNullOrEmpty(txt_tc.Text) == true)
+            {
+                MessageBox.Show("Phải chọn môn học cần xóa");
+                connect.Close();
+            }
+            else
+            {
+                SqlCommand com = new SqlCommand(@"DELETE FROM MONHOC WHERE MAMH=@id ", connect);
+                com.Parameters.AddWithValue("@id", txt_id.Text);
+                com.ExecuteNonQuery();
+                MessageBox.Show("Xóa thành công");
+                connect.Close();
+            }
+                
             loadData();
-            txt_id.Text = "";
-            txt_name.Text = "";
-            txt_tc.Text = "";
-            connect.Close();
+            //xóa các textbox
+            txt_id.ResetText();
+            txt_name.ResetText();
+            txt_tc.ResetText();
+            
         }
 
         private void btn_update_Click(object sender, EventArgs e)
         {
             connect.Open();
-            txt_id.ReadOnly = true;           
-            SqlCommand com = new SqlCommand(@"UPDATE  MONHOC SET TENMH=@name WHERE MAMH =@id ", connect);
-            SqlCommand cmdCheck = new SqlCommand(@"SELECT Count(*) FROM MONHOC WHERE TENMH = @name", connect);
+            txt_id.ReadOnly = true;                      
+            SqlCommand cmdCheck = new SqlCommand(@"SELECT Count(*) FROM MONHOC WHERE MAMH NOT LIKE '%' + @id + '%' AND TENMH = @name", connect);
+            cmdCheck.Parameters.AddWithValue("@id", txt_id.Text);
             cmdCheck.Parameters.AddWithValue("@name", txt_name.Text);
             int result = (int)cmdCheck.ExecuteScalar();
             if (result > 0)           
@@ -113,26 +129,34 @@ namespace QLSV
             }
             else
             {
+                SqlCommand com = new SqlCommand(@"UPDATE  MONHOC SET TENMH=@name, SOTC=@tc WHERE MAMH =@id ", connect);
                 com.Parameters.AddWithValue("@id", txt_id.Text);
                 com.Parameters.AddWithValue("@name", txt_name.Text);
                 com.Parameters.AddWithValue("@tc", txt_tc.Text);
                 com.ExecuteNonQuery();
-                MessageBox.Show("Cập nhật thành công");
-                connect.Close();
             }
             
+            MessageBox.Show("Cập nhật thành công");
+            connect.Close();
             loadData();
-     
+            //xóa các textbox
+            txt_id.ResetText();
+            txt_name.ResetText();
+            txt_tc.ResetText();
         }
+        
 
         private void btn_reset_Click(object sender, EventArgs e)
         {
-            txt_id.ReadOnly = false;
-            txt_id.Text = "";
-            txt_name.Text = "";
-            txt_tc.Text = "";
+            //xóa các textbox
+            txt_id.ResetText();
+            txt_name.ResetText();
+            txt_tc.ResetText();
+        }
+        private void txt_name_TextChanged(object sender, EventArgs e)
+        {
+
         }
 
-      
     }
 }

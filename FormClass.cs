@@ -66,6 +66,7 @@ namespace QLSV
                 if (string.IsNullOrEmpty(txt_id.Text) == true || string.IsNullOrEmpty(txt_name.Text) == true || string.IsNullOrEmpty(txt_nk.Text) == true)
                 {
                     MessageBox.Show("Phải điền đầy đủ thông tin");
+                    connect.Close();
                 }
                 else
                 {
@@ -76,33 +77,47 @@ namespace QLSV
                     MessageBox.Show("Thêm thành công");
                     connect.Close();
                 }
-                
+
             }
             loadData();
+
+            txt_id.ResetText();
+            txt_name.ResetText();
+            txt_nk.ResetText();
         }
 
-       
 
-        
+
+
         private void btn_del_Click(object sender, EventArgs e)
         {
             connect.Open();
-            SqlCommand com = new SqlCommand(@"DELETE FROM LOP WHERE MALP=@id ", connect);
-            com.Parameters.AddWithValue("@id", txt_id.Text);
-            com.ExecuteNonQuery();
-            MessageBox.Show("Xóa thành công");
+            if (string.IsNullOrEmpty(txt_id.Text) == true || string.IsNullOrEmpty(txt_name.Text) == true || string.IsNullOrEmpty(txt_nk.Text) == true)
+            {
+                MessageBox.Show("Phải chọn lớp cần xóa");
+                connect.Close();
+            }
+            else
+            {
+                SqlCommand com = new SqlCommand(@"DELETE FROM LOP WHERE MALP=@id ", connect);
+                com.Parameters.AddWithValue("@id", txt_id.Text);
+                com.ExecuteNonQuery();
+                MessageBox.Show("Xóa thành công");
+                connect.Close();
+            }
+
             loadData();
-            txt_id.Text = "";
-            txt_name.Text = "";
-            txt_nk.Text = "";
-            connect.Close();
+            txt_id.ReadOnly = false;
+            txt_id.ResetText();
+            txt_name.ResetText();
+            txt_nk.ResetText();
         }
 
         private void btn_update_Click(object sender, EventArgs e)
         {
             connect.Open();
-            SqlCommand com = new SqlCommand(@"UPDATE LOP SET TENLP = @name, NK= @nk WHERE MALP =@id ", connect);
-            SqlCommand cmdCheck = new SqlCommand(@"SELECT Count(*) FROM OP WHERE TENLP = @name", connect);
+            SqlCommand cmdCheck = new SqlCommand(@"SELECT Count(*) FROM LOP WHERE MALP NOT LIKE '%' + @id + '%' AND TENLP =@name", connect);
+            cmdCheck.Parameters.AddWithValue("@id", txt_id.Text);
             cmdCheck.Parameters.AddWithValue("@name", txt_name.Text);
             int result = (int)cmdCheck.ExecuteScalar();
             if (result > 0)
@@ -112,23 +127,39 @@ namespace QLSV
             }
             else
             {
-                com.Parameters.AddWithValue("@id", txt_id.Text);
-                com.Parameters.AddWithValue("@name", txt_name.Text);
-                com.Parameters.AddWithValue("@nk", txt_nk.Text);
-                com.ExecuteNonQuery();
-                MessageBox.Show("Cập nhật thành công");
-                connect.Close();
-            }           
+                if (string.IsNullOrEmpty(txt_id.Text) == true || string.IsNullOrEmpty(txt_name.Text) == true || string.IsNullOrEmpty(txt_nk.Text) == true)
+                {
+                    MessageBox.Show("Phải chọn lớp cần cập nhật");
+                    connect.Close();
+                }
+                else
+                {
+                    SqlCommand com = new SqlCommand(@"UPDATE LOP SET TENLP = @name, NK= @nk WHERE MALP =@id AND TENLP =@name ", connect);
+                    com.Parameters.AddWithValue("@id", txt_id.Text);
+                    com.Parameters.AddWithValue("@name", txt_name.Text);
+                    com.Parameters.AddWithValue("@nk", txt_nk.Text);
+                    com.ExecuteNonQuery();
+                    MessageBox.Show("Cập nhật thành công");
+                    connect.Close();
+
+                }
+            }
+            
+
             loadData();
-       
+            txt_id.ReadOnly = false;
+            txt_id.ResetText();
+            txt_name.ResetText();
+            txt_nk.ResetText();
+
         }
 
         private void btn_reset_Click(object sender, EventArgs e)
         {
             txt_id.ReadOnly = false;
-            txt_id.Text = "";
-            txt_name.Text = "";
-            txt_nk.Text = "";
+            txt_id.ResetText();
+            txt_name.ResetText();
+            txt_nk.ResetText();
         }
     }
 }
