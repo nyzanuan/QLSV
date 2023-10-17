@@ -60,15 +60,21 @@ namespace QLSV
 
             OpenForm(formSubject); 
         }
-
-        private void label1_Click(object sender, EventArgs e)
+        private void btn_report_Click(object sender, EventArgs e)
         {
-
+           FormReport formReport = new FormReport();
+           OpenForm(formReport);
         }
+       
 
         private void btn_logout_Click(object sender, EventArgs e)
         {
             this.Close();
         }
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }

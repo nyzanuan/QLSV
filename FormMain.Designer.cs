@@ -142,6 +142,7 @@ namespace QLSV
             this.btn_report.TabIndex = 6;
             this.btn_report.Text = "Báo cáo";
             this.btn_report.UseVisualStyleBackColor = true;
+            this.btn_report.Click += new System.EventHandler(this.btn_report_Click);
             // 
             // FormMain
             // 
