@@ -25,6 +25,9 @@ namespace QLSV
             table.Clear();
             adpt.Fill(table);
             show_class.DataSource = table;
+            show_class.Columns["MALP"].HeaderText = "Mã lớp";
+            show_class.Columns["TENLP"].HeaderText = "Tên lớp";
+            show_class.Columns["NK"].HeaderText = "Niên khóa";
 
         }
         public FormClass()
@@ -160,6 +163,35 @@ namespace QLSV
             txt_id.ResetText();
             txt_name.ResetText();
             txt_nk.ResetText();
+        }
+
+        private void btn_search_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txt_search.Text) == true)
+            {
+                MessageBox.Show("Nhập vào thông tin cần tìm kiếm");
+            }
+            else
+            {
+
+                connect.Open();
+                SqlCommand com = new SqlCommand(@"SELECT * FROM LOP WHERE MALP LIKE '%' + @key + '%' OR TENLP LIKE '%' + @key + '%' OR NK LIKE '%' + @key + '%' ", connect);
+                com.Parameters.AddWithValue("@key", "%" + txt_search.Text + "%");
+                SqlDataReader dr = com.ExecuteReader();
+                table.Clear();
+                table.Load(dr);
+                show_class.DataSource = table;
+                connect.Close();
+
+            }
+        }
+
+        private void txt_search_TextChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txt_search.Text) == true)
+            {
+                loadData();
+            }
         }
     }
 }

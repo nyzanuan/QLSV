@@ -31,7 +31,9 @@ namespace QLSV
             show_sub.DataSource = table;
             //table.Select().Where(item => item["MASV"] == txt_id.Text);
             // DataRow[] dr = table.Select().Where(item => item["MASV"] == txt_id.Text).ToArray();
-
+            show_sub.Columns["MAMH"].HeaderText = "Mã môn học";
+            show_sub.Columns["TENMH"].HeaderText = "Tên môn học";
+            show_sub.Columns["SOTC"].HeaderText = "Số tín chỉ";
         }
         private void FormSubject_Load(object sender, EventArgs e)
         {
@@ -153,10 +155,52 @@ namespace QLSV
             txt_name.ResetText();
             txt_tc.ResetText();
         }
+        private void tbn_search_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txt_search.Text) == true)
+            {
+                MessageBox.Show("Nhập vào thông tin cần tìm kiếm");
+            }
+            else
+            {
+
+                connect.Open();
+                SqlCommand com = new SqlCommand(@"SELECT * FROM MONHOC WHERE MAMH LIKE '%' + @key + '%' OR TENMH LIKE '%' + @key + '%' OR SOTC LIKE '%' + @key + '%' ", connect);
+                com.Parameters.AddWithValue("@key", "%" + txt_search.Text + "%");
+                SqlDataReader dr = com.ExecuteReader();
+                table.Clear();
+                table.Load(dr);
+                show_sub.DataSource = table;
+                connect.Close();
+
+            }
+        }
+        private void txt_search_TextChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txt_search.Text) == true)
+            {
+                loadData();
+            }
+        }
+
+
+
+
+
+
         private void txt_name_TextChanged(object sender, EventArgs e)
         {
 
         }
 
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -30,7 +30,7 @@ namespace QLSV
         }
 
         private void btn_login_Click(object sender, EventArgs e)
-        {/*
+        {
             connect.Open();
             SqlCommand cmdCheck = new SqlCommand(@"SELECT * FROM TAIKHOAN WHERE TENDN = @account AND MATKHAU = @password ", connect);
             cmdCheck.Parameters.AddWithValue("@account", txt_acc.Text);
@@ -53,16 +53,17 @@ namespace QLSV
                 else
                 {
                     FormMain formMain = new FormMain();
+                    
                     formMain.ShowDialog();
+                    txt_acc.ResetText();
+                    txt_pass.ResetText();
                 }
-                
-    
+               
             }
             
             connect.Close();
-            */
-            FormMain formMain = new FormMain();
-            formMain.ShowDialog();
+            
+            
         }
 
         

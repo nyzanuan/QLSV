@@ -48,7 +48,7 @@ namespace QLSV
             this.btn_manage_stu.Name = "btn_manage_stu";
             this.btn_manage_stu.Size = new System.Drawing.Size(156, 44);
             this.btn_manage_stu.TabIndex = 0;
-            this.btn_manage_stu.Text = "Quản lí sinh viên";
+            this.btn_manage_stu.Text = "Quản lý sinh viên";
             this.btn_manage_stu.UseVisualStyleBackColor = true;
             this.btn_manage_stu.Click += new System.EventHandler(this.btn_manage_stu_Click);
             // 
@@ -59,7 +59,7 @@ namespace QLSV
             this.btn_manage_class.Name = "btn_manage_class";
             this.btn_manage_class.Size = new System.Drawing.Size(156, 44);
             this.btn_manage_class.TabIndex = 1;
-            this.btn_manage_class.Text = "Quản lí lớp học";
+            this.btn_manage_class.Text = "Quản lý lớp học";
             this.btn_manage_class.UseVisualStyleBackColor = true;
             this.btn_manage_class.Click += new System.EventHandler(this.btn_manage_class_Click);
             // 
@@ -70,7 +70,7 @@ namespace QLSV
             this.btn_manage_score.Name = "btn_manage_score";
             this.btn_manage_score.Size = new System.Drawing.Size(156, 44);
             this.btn_manage_score.TabIndex = 2;
-            this.btn_manage_score.Text = "Quản lí điểm";
+            this.btn_manage_score.Text = "Quản lý điểm";
             this.btn_manage_score.UseVisualStyleBackColor = true;
             this.btn_manage_score.Click += new System.EventHandler(this.btn_manage_score_Click);
             // 
@@ -81,7 +81,7 @@ namespace QLSV
             this.btn_subject.Name = "btn_subject";
             this.btn_subject.Size = new System.Drawing.Size(156, 44);
             this.btn_subject.TabIndex = 3;
-            this.btn_subject.Text = "Quản lí môn học";
+            this.btn_subject.Text = "Quản lý môn học";
             this.btn_subject.UseVisualStyleBackColor = true;
             this.btn_subject.Click += new System.EventHandler(this.btn_subject_Click);
             // 
