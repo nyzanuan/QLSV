@@ -169,6 +169,7 @@ namespace QLSV
             // 
             // show_sub
             // 
+            this.show_sub.AllowUserToAddRows = false;
             this.show_sub.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.show_sub.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
             this.show_sub.BackgroundColor = System.Drawing.Color.LightSteelBlue;

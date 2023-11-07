@@ -18,7 +18,7 @@ namespace QLSV
         SqlDataAdapter adpt = new SqlDataAdapter();
         DataTable table = new DataTable();
 
-       void loadData()
+        void loadData()
         {
             cmd = connect.CreateCommand();
             cmd.CommandText = "Select * from SINHVIEN";
@@ -26,8 +26,15 @@ namespace QLSV
             table.Clear();
             adpt.Fill(table);
             show_stu.DataSource = table;
+
+            //định dạng cột
+            show_stu.Columns["MASV"].HeaderText = "Mã sinh viên";
+            show_stu.Columns["MALP"].HeaderText = "Mã lớp ";
+            show_stu.Columns["TENSV"].HeaderText = "Tên sinh viên";
+            show_stu.Columns["DCSV"].HeaderText = "Địa chỉ sinh viên";
+
             //table.Select().Where(item => item["MASV"] == txt_id.Text);
-           // DataRow[] dr = table.Select().Where(item => item["MASV"] == txt_id.Text).ToArray();
+            // DataRow[] dr = table.Select().Where(item => item["MASV"] == txt_id.Text).ToArray();
 
         }
         public FormStu()
@@ -53,17 +60,17 @@ namespace QLSV
         private void btn_add_Click(object sender, EventArgs e)
         {
 
-            connect.Open();          
+            connect.Open();
             SqlCommand cmdCheck = new SqlCommand(@"SELECT Count(*) FROM SINHVIEN WHERE MASV = @id", connect);
             cmdCheck.Parameters.AddWithValue("@id", txt_id.Text);
             //SqlDataReader dr = cmdCheck.ExecuteReader();
             int result = (int)cmdCheck.ExecuteScalar();
-            
+
             if (result > 0)
             {
                 MessageBox.Show("Mã sinh viên đã tồn tại");
                 connect.Close();
-                
+
             }
             else
             {
@@ -112,7 +119,7 @@ namespace QLSV
                 MessageBox.Show("Xóa thành công");
                 connect.Close();
             }
-            
+
             loadData();
             //xóa các textbox
             txt_id.ReadOnly = false;
@@ -141,7 +148,7 @@ namespace QLSV
                 MessageBox.Show("Cập nhật thành công");
                 connect.Close();
             }
-            
+
             loadData();
 
             //xóa các textbox
@@ -151,32 +158,27 @@ namespace QLSV
             txt_name.ResetText();
             txt_address.ResetText();
         }
-       
+
         private void btn_search_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(txt_search.Text) == true)
+            {
+                MessageBox.Show("Nhập vào thông tin cần tìm kiếm");
+            }
+            else
+            {
 
-            connect.Open(); //OR MALP LIKE '%@class_id%' OR TENSV LIKE '%@name%' OR DCSV LIKE '%@address%'//
-            SqlCommand com = new SqlCommand(@"SELECT * FROM SINHVIEN WHERE MASV LIKE '%' + @key + '%' OR TENSV LIKE '%' + @key + '%' OR DCSV LIKE '%' + @key + '%' ", connect);
-            com.Parameters.AddWithValue("@key", "%" + txt_search.Text + "%");
-            /*com.Parameters.AddWithValue("@id", txt_search.Text);
-            //com.Parameters.AddWithValue("@id", txt_search.Text);
-            com.Parameters.AddWithValue("@class_id", txt_search.Text);
-            com.Parameters.AddWithValue("@name", txt_search.Text);
-            com.Parameters.AddWithValue("@address", txt_search.Text);*/
+                connect.Open();
+                SqlCommand com = new SqlCommand(@"SELECT * FROM SINHVIEN WHERE MASV LIKE '%' + @key + '%' OR TENSV LIKE '%' + @key + '%' OR DCSV LIKE '%' + @key + '%' ", connect);
+                com.Parameters.AddWithValue("@key", "%" + txt_search.Text + "%");
+                SqlDataReader dr = com.ExecuteReader();
+                table.Clear();
+                table.Load(dr);
+                show_stu.DataSource = table;
+                connect.Close();
 
-            //com.ExecuteNonQuery();
-
-           /* adpt.SelectCommand = cmd;
-            table.Clear();
-            adpt.Fill(table);
-            show_stu.DataSource = table;*/
-
-            SqlDataReader dr = com.ExecuteReader();
-            table.Clear();
-            table.Load(dr);           
-            show_stu.DataSource = table;
-
-            connect.Close();
+            }
+            
 
         }
 
@@ -187,6 +189,14 @@ namespace QLSV
             txt_class_id.ResetText();
             txt_name.ResetText();
             txt_address.ResetText();
+        }
+
+        private void txt_search_TextChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txt_search.Text) == true)
+            {
+                loadData();
+            }
         }
     }
 }

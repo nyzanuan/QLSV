@@ -46,20 +46,42 @@ namespace QLSV
         private void btn_add_Click(object sender, EventArgs e)
         {
             connect.Open();
-            SqlCommand cmdCheck = new SqlCommand(@"SELECT MASV FROM SINHVIEN WHERE MASV = @id", connect);
-            cmdCheck.Parameters.AddWithValue("@id", txt_id.Text);
-            SqlDataReader dr = cmdCheck.ExecuteReader();
+            SqlCommand cmdCheckIdStu = new SqlCommand(@"SELECT MASV FROM SINHVIEN WHERE MASV = @id", connect);
+            cmdCheckIdStu.Parameters.AddWithValue("@id", txt_id.Text);
+            SqlDataReader dr = cmdCheckIdStu.ExecuteReader();
+            
             if (dr.Read())
             {
+
                 connect.Close();
                 connect.Open();
-                SqlCommand com = new SqlCommand(@"INSERT INTO DIEMSV (MASV,MAMH,DIEM) VALUES (@id,@sub_id,@score)", connect);
-                com.Parameters.AddWithValue("@id", txt_id.Text);
-                com.Parameters.AddWithValue("@sub_id", txt_sub_id.Text);
-                com.Parameters.AddWithValue("@score", double.Parse(txt_score.Text));
-                com.ExecuteNonQuery();
-                MessageBox.Show("Thêm thành công");
+                SqlCommand cmdCheckIdSub = new SqlCommand(@"SELECT MAMH FROM MONHOC WHERE MAMH = @sub_id", connect);
+                cmdCheckIdSub.Parameters.AddWithValue("@sub_id", txt_sub_id.Text);
+                SqlDataReader dr1 = cmdCheckIdStu.ExecuteReader();
+                if (dr1.Read())
+                {
 
+                    MessageBox.Show("Mã môn học không tồn tại");
+                }
+                else
+                {
+                    try
+                    {
+                        connect.Close();
+                        connect.Open();
+                        SqlCommand com = new SqlCommand(@"INSERT INTO DIEMSV (MASV,MAMH,DIEM) VALUES (@id,@sub_id,@score)", connect);
+                        com.Parameters.AddWithValue("@id", txt_id.Text);
+                        com.Parameters.AddWithValue("@sub_id", txt_sub_id.Text);
+                        com.Parameters.AddWithValue("@score", double.Parse(txt_score.Text));
+                        com.ExecuteNonQuery();
+                        MessageBox.Show("Thêm thành công");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Điểm phải nhỏ hơn 10 và lớn hơn hoặc bằng 0" + ex);
+                    }
+                }
+                
 
             }
             else
@@ -71,6 +93,7 @@ namespace QLSV
                 }
                 else
                 {
+
                     MessageBox.Show("Mã sinh viên không tồn tại");
                     connect.Close();
                 }
@@ -100,7 +123,7 @@ namespace QLSV
                 MessageBox.Show("Xóa thành công");
                 connect.Close();
             }
-            
+
             loadData();
             txt_id.ResetText();
             txt_sub_id.ResetText();
@@ -128,7 +151,7 @@ namespace QLSV
                 MessageBox.Show("Cập nhật thành công");
                 connect.Close();
             }
-            
+
             loadData();
             txt_id.ResetText();
             txt_sub_id.ResetText();
