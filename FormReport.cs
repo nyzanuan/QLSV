@@ -127,23 +127,10 @@ namespace QLSV
             {
                 SaveFileDialog save = new SaveFileDialog();
                 save.Filter = "PDF (*.pdf)|*.pdf";
-                save.FileName = "Result.pdf";
                 bool ErrorMessage = false;
                 if (save.ShowDialog() == DialogResult.OK)
                 {
-                    if (File.Exists(save.FileName))
-                    {
-                        try
-                        {
-                            File.Delete(save.FileName);
-                        }
-                        catch (Exception ex)
-                        {
-
-                            ErrorMessage = true;
-                            MessageBox.Show("Không thể lưu file" + ex.Message);
-                        }
-                    }
+                    
                     if (!ErrorMessage)
                     {
                         try
